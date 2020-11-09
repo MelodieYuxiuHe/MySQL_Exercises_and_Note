@@ -17,6 +17,7 @@ Note:
 3) Consider DATEDIFF() when need to deal with date range
 
 1067. Sellers With No Sales
+
 My answer:
 
 ```MY SQL
