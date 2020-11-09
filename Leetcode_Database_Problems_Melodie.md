@@ -56,6 +56,21 @@ Note:
 The question asked for 'most frequent product'. Thus we count date.
 Partition by customer_id, we rank: for each customer, how many different order for one product?
 
+1613. Find the Missing IDs
+
+```MY SQL
+WITH RECURSIVE cte AS (
+    SELECT 1 AS counter  -- anchor member
+    UNION ALL
+    SELECT counter + 1 FROM cte WHERE counter < (SELECT MAX(customer_id) FROM customers) -- recursive member that references to the CTE name
+)
+SELECT counter AS ids FROM cte
+WHERE counter NOT IN (SELECT customer_id FROM customers)
+```
+Note: 
+1) Recursive CTE: https://www.mysqltutorial.org/mysql-recursive-cte/
+2) cte selects all the number from 1 to the max customer id, then we exclude whatever already exist
+
 EASY
 
 1633. Percentage of Users Attended a Contest
@@ -66,5 +81,37 @@ FROM Register R
 GROUP BY contest_id
 ORDER BY percentage DESC, contest_id
 ```
+
+196. Delete Duplicate Emails
+
+My Answer:
+
+```MY SQL
+WITH tmp AS (SELECT MIN(Id) FROM Person GROUP BY Email)
+
+DELETE FROM Person
+WHERE Id NOT IN (SELECT * FROM tmp)
+```
+Note:
+Use 'DELETE' here
+
+197. Rising Temperature
+
+```MY SQL
+SELECT x.id
+FROM Weather x JOIN Weather y
+ON DATEDIFF(x.recordDate, y.recordDate) = 1
+AND x.Temperature > y.Temperature
+```
+
+```MY SQL
+SELECT w.id FROM Weather w JOIN Weather p
+ON w.recordDate = DATE_ADD(p.recordDate, INTERVAL 1 DAY) AND w.Temperature > p.Temperature
+```
+Note:
+1) DATE_ADD function and DATEDIFF function
+2) JOIN ON, specify conditions for join
+
+
 
 
