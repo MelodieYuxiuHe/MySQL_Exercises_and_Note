@@ -28,6 +28,7 @@ ORDER BY seller_name
 ```
 
 Answer in Discussion Session (https://leetcode.com/problems/sellers-with-no-sales/discuss/895961/No-subquery)
+
 ```MY SQL
 select s.seller_name
   from Seller s
